@@ -1,7 +1,6 @@
 const fs = require("fs").promises;
 const { error } = require("console");
 const path = require("path");
-
 const contactsPath = path.join("./db/contacts.json");
 
 async function writeContacts() {

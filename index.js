@@ -26,7 +26,11 @@ async function invokeAction({ action, id, name, email, phone }) {
 			break;
 
 		case "get":
+			
 			const contact = await getContactById(id);
+			if (!contact){
+				console.log(`there is no contact with id= ${id}!`)
+			}
 			console.table(contact);
 			break;
 
@@ -38,7 +42,7 @@ async function invokeAction({ action, id, name, email, phone }) {
 		case "remove":
 			const removedContact = await removeContact(id);
 			console.table(removedContact);
-
+			break
 		default:
 			console.warn("\x1B[31m Unknown action type!");
 	}
