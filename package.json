@@ -3,8 +3,27 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
+    "test": "test",
     "start": "node index.js",
     "start:dev": "nodemon index.js"
-  }
-  
+  },
+  "name": "goit-nodejs-hw01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^9.4.1",
+    "utf8": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KacperPasnicki/goit-nodejs-hw01.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KacperPasnicki/goit-nodejs-hw01/issues"
+  },
+  "homepage": "https://github.com/KacperPasnicki/goit-nodejs-hw01#readme",
+  "description": ""
 }

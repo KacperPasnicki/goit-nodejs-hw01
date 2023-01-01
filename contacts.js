@@ -1,44 +1,63 @@
 const fs = require("fs").promises;
-const { writeFile } = require("fs");
-const path = require("node:path");
+const { error } = require("console");
+const path = require("path");
 
 const contactsPath = path.join("./db/contacts.json");
 
-const writeContacts = fs
-/*/
-writeFile !!!!!
-/*/
-	.readFile(contactsPath)
-	.then((data) => console.log(data.toString()))
-	.catch((e) => console.log(e.message));
+async function writeContacts() {
+	const contacts = await fs.readFile(contactsPath);
+	return JSON.parse(contacts);
+}
 
-function listContacts() {
-	
+async function listContacts() {
 	try {
-		const contacts = JSON.parse(fs.readFile(contactsPath));
-        return contacts
-	} catch (e) {
-		return []
+		const contacts = await writeContacts();
+		return contacts;
+	} catch (error) {
+		console.log(error.message);
 	}
 }
 
-function getContactById(contactId) {
-	// ...twój kod
+async function getContactById(contactId) {
+	try {
+		const contacts = await listContacts();
+		const requestedContact = contacts.find(({ id }) => id === contactId);
+		return requestedContact;
+	} catch (error) {
+		console.log(error.message);
+	}
 }
 
 async function removeContact(contactId) {
 	try {
-        contacts = JSON.parse(fs.readFile(contactsPath))
-      await filter.contacts((contactId) => contactId.id != id)
-    }
-    catch{e}
-    console.log(e)
+		const contacts = await listContacts();
+		const filteredContacts = contacts.filter(({ id }) => id !== contactId);
+		await fs.writeFile(
+			contactsPath,
+			JSON.stringify(filteredContacts, null, 2),
+			{
+				encoding: "utf-8",
+			}
+		);
+		return filteredContacts;
+	} catch (error) {
+		console.log(error.message);
+	}
 }
 
 async function addContact(name, email, phone) {
-	let contacts = JSON.stringify(contacts);
 	try {
-	} catch {}
+		let contacts = await listContacts();
+		const lastId = Math.max(...contacts.map((c) => parseInt(c.id, 10))) + 1;
+		const newContact = { id: lastId.toString(), name, email, phone };
+		const updateContacts = [...contacts, newContact];
+		await fs.writeFile(contactsPath, JSON.stringify(updateContacts, null, 2), {
+			encoding: "utf-8",
+		});
+		return updateContacts;
+	} catch {
+		console.log(error.message);
+	}
 }
 
 module.exports = {
